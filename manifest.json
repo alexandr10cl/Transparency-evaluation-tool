@@ -1,15 +1,22 @@
 {
-    "manifest_version": 3,
-    "version": "0.0.1",
-    "name": "DX-Tracking",
-    "description": "Ferramenta de análise de transparência",
-    "author": "UNIRIO",
-    "action": {
-        "default_title": "DX-Tracking",
-        "default_popup": "popup.html"
-    },
-    "permissions": ["sidePanel"],
-    "side_panel": {
-    "default_path": "popup.html"
+  "manifest_version": 3,
+  "version": "0.0.1",
+  "name": "DX-Tracking",
+  "description": "Ferramenta de análise de transparência",
+  "author": "UNIRIO",
+  "action": {
+      "default_title": "DX-Tracking",
+      "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+      "tabs",
+      "activeTab",
+      "sidePanel"
+  ],
+  "side_panel": {
+      "default_path": "popup.html"
   }
 }

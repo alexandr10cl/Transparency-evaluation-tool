@@ -6,16 +6,16 @@ CORS(app) # Permite que qualquer origem acesse a API
 #CORS(app, origins=["chrome-extension://abc123"]) bloquear depois com o id da extensao para apenas ela poder acessar a api
 
 # Guardar os JSON recebidos
-tasks_data = []
+collections_data = []
 
 @app.route('/')
 def index():
-    return render_template('index.html', tasks=tasks_data)
+    return render_template('index.html', collections=collections_data)
 
 @app.route('/submit_tasks', methods=['POST'])
 def dashboard():
     data = request.json  # Obtém os dados JSON enviados pela extensão
-    tasks_data.extend(data)
+    collections_data.append(data)
     print("Dados recebidos:", data) 
     return jsonify({"message": "Dados recebidos com sucesso"}), 200
 

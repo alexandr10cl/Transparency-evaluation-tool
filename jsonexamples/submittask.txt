@@ -1,8 +1,14 @@
 [
   {
+    "username": "programmer 1",
+    "portal": "python.org"
+  },
+  {
     "id": 1,
     "title": "Task 1",
     "description": "Translate the page into Portuguese.",
+    "initial_timestamp": "2025-03-11T22:05:56.321Z",
+    "final_timestamp": "2025-03-11T22:05:57.593Z",
     "answers": [
       {
         "question": "Could you solve the task? If not, could you explain why?",
@@ -22,6 +28,8 @@
     "id": 2,
     "title": "Task 2",
     "description": "Find the language documentation.",
+    "initial_timestamp": "2025-03-11T22:05:56.321Z",
+    "final_timestamp": "2025-03-11T22:05:57.593Z",
     "answers": [
       {
         "question": "Could you solve the task? If not, could you explain why?",
@@ -37,6 +45,8 @@
     "id": 3,
     "title": "Task 3",
     "description": "Task description.",
+    "initial_timestamp": "2025-03-11T22:05:56.321Z",
+    "final_timestamp": "2025-03-11T22:05:57.593Z",
     "answers": [
       {
         "question": "Q1?",

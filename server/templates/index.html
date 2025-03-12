@@ -1,24 +1,403 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coletas</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Coletas</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --success: #4cc9f0;
+      --info: #4895ef;
+      --warning: #f72585;
+      --danger: #e63946;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background-color: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    .header h1 {
+      color: var(--primary);
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .header h1 i {
+      margin-right: 12px;
+    }
+    
+    .portals-section {
+      margin-bottom: 40px;
+    }
+    
+    .portal-header {
+      background-color: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    
+    .portal-header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    
+    .portal-header .toggle-icon {
+      transition: var(--transition);
+    }
+    
+    .portal-header.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+    }
+    
+    .portal-content {
+      background-color: white;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .developer-section {
+      padding: 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .developer-section:last-child {
+      border-bottom: none;
+    }
+    
+    .developer-header {
+      background-color: #f8f9fa;
+      padding: 12px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .developer-header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--secondary);
+    }
+    
+    .developer-header .toggle-icon {
+      transition: var(--transition);
+      color: var(--gray);
+    }
+    
+    .developer-header.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+    }
+    
+    .task-list {
+      padding: 0;
+    }
+    
+    .task-card {
+      border-bottom: 1px solid #eee;
+      padding: 20px;
+      transition: var(--transition);
+    }
+    
+    .task-card:last-child {
+      border-bottom: none;
+    }
+    
+    .task-card:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    
+    .task-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+    }
+    
+    .task-title i {
+      margin-right: 10px;
+      color: var(--info);
+    }
+    
+    .task-time {
+      display: flex;
+      align-items: center;
+      background-color: var(--info);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+    
+    .task-time i {
+      margin-right: 5px;
+    }
+    
+    .task-description {
+      margin-bottom: 15px;
+      color: var(--gray);
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      border-left: 3px solid var(--info);
+    }
+    
+    .timestamp {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: var(--gray);
+    }
+    
+    .timestamp-item {
+      display: flex;
+      align-items: center;
+    }
+    
+    .timestamp-item i {
+      margin-right: 5px;
+      color: var(--primary);
+    }
+    
+    .answers-container {
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin-top: 15px;
+    }
+    
+    .answers-title {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--secondary);
+    }
+    
+    .answers-title i {
+      margin-right: 8px;
+    }
+    
+    .answer {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 10px;
+    }
+    
+    .answer:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
+    .question {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+    
+    .answer-text {
+      color: var(--dark);
+      background-color: white;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      border-left: 3px solid var(--success);
+    }
+    
+    .collapsed + .hidden {
+      display: none;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      background-color: var(--success);
+      color: white;
+    }
+    
+    /* Animações */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease;
+    }
+    
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .timestamp {
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .task-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Coletas</h1>
-    {% for task in tasks %}
-    <h2>{{ task.description }}</h2>
-        {% for a in task.answers %}
-        <h3>{{ a.question }}</h3>
-        <p>{{ a.answer }}</p>
-        {% endfor %}
+  <div class="dashboard">
+    <div class="header">
+      <h1><i class="fas fa-chart-line"></i> Dashboard de Coletas</h1>
+    </div>
+    
+    <!-- Agrupar por Portal (seco_portal) -->
+    {% set portals = {} %}
+    {% for collection in collections %}
+      {% if collection.seco_portal not in portals %}
+        {% set _ = portals.update({collection.seco_portal: []}) %}
+      {% endif %}
+      {% set _ = portals[collection.seco_portal].append(collection) %}
     {% endfor %}
+    
+    <!-- Exibir portais em seções colapsáveis -->
+    {% for portal_name, portal_collections in portals.items() %}
+      <div class="portals-section">
+        <div class="portal-header" onclick="toggleCollapse(this)">
+          <h2><i class="fas fa-sitemap"></i> Portal: {{ portal_name }}</h2>
+          <div class="badge">{{ portal_collections|length }} Desenvolvedores</div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="portal-content">
+          {% for collection in portal_collections %}
+            <div class="developer-section">
+              <div class="developer-header" onclick="toggleCollapse(this)">
+                <h3><i class="fas fa-user-code"></i> Desenvolvedor: {{ collection.username }}</h3>
+                <div class="badge">{{ collection.performed_tasks|length }} Tarefas</div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+              </div>
+              <div class="task-list">
+                {% for task in collection.performed_tasks %}
+                  <div class="task-card fade-in">
+                    <div class="task-header">
+                      <div class="task-title">
+                        <i class="fas fa-tasks"></i> {{ task.title }}
+                      </div>
+                      
+                      {% set start = task.initial_timestamp|string %}
+                      {% set end = task.final_timestamp|string %}
+                      
+                      <!-- Calcular a duração (simplificada, apenas para demonstração) -->
+                      <div class="task-time">
+                        <i class="fas fa-clock"></i> 
+                        <span class="duration" data-start="{{ task.initial_timestamp }}" data-end="{{ task.final_timestamp }}">
+                          Calculando...
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div class="task-description">{{ task.description }}</div>
+                    
+                    <div class="timestamp">
+                      <div class="timestamp-item">
+                        <i class="fas fa-play"></i> Início: {{ task.initial_timestamp }}
+                      </div>
+                      <div class="timestamp-item">
+                        <i class="fas fa-flag-checkered"></i> Fim: {{ task.final_timestamp }}
+                      </div>
+                    </div>
+                    
+                    {% if task.answers %}
+                      <div class="answers-container">
+                        <div class="answers-title">
+                          <i class="fas fa-comment-dots"></i> Respostas
+                        </div>
+                        {% for answer in task.answers %}
+                          <div class="answer">
+                            <div class="question">{{ answer.question }}</div>
+                            <div class="answer-text">{{ answer.answer }}</div>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Calcular durações para todas as tarefas
+      document.querySelectorAll('.duration').forEach(function(element) {
+        const start = new Date(element.dataset.start);
+        const end = new Date(element.dataset.end);
+        const durationMs = end - start;
+        const durationMinutes = Math.round(durationMs / (1000 * 60));
+        element.textContent = `${durationMinutes} minutos`;
+      });
+    });
+    
+    function toggleCollapse(element) {
+      element.classList.toggle('collapsed');
+      let content = element.nextElementSibling;
+      if (content) {
+        content.classList.toggle('hidden');
+      }
+    }
+  </script>
 </body>
 </html>
