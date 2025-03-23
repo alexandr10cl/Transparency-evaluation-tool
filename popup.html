@@ -9,7 +9,25 @@
 <body>
     <div class="main_page">
         <h1>Transparency evaluation tool</h1>
-        <button id="startTestButton">Start</button>
+        <button id="mainPageButton">Start</button>
+    </div>
+
+    <div class="questionnaire_page">
+        <h1>Questionnaire for Profile Characterization</h1>
+        <p>Before starting this experiment, please answer the following questions.</p>
+        <div class="questionnaire_questions">
+            <label for="question-age">What is your age?</label>
+            <input class="input" type="number" id="question-age" name="question-age">
+            <label for="question-academic-level">What is your level of academic education?</label>
+            <input class="input" type="text" id="question-academic-level" name="question-academic-level">
+            <label for="question-sector">In which sector do you work? And in which segment do you work?</label>
+            <input class="input" type="text" id="question-sector" name="question-sector">
+            <label for="question-ecos">For which ecosystem do you develop?</label>
+            <input class="input" type="text" id="question-ecos" name="question-ecos">
+            <label for="question-experience">How long have you been working with software development (in years)?</label>
+            <input class="input" type="number" id="question-experience" name="question-experience">
+        </div>
+        <button id="questionnaireButton">Start evaluation</button>
     </div>
 
     <div class="container-tasks" id="taskscontainer">

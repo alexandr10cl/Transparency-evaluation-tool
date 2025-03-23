@@ -110,3 +110,9 @@ button {
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+.questionnaire_questions {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}

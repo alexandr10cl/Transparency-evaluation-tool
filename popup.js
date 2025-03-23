@@ -1,16 +1,18 @@
 let starttestdiv = document.querySelector(".main_page");
 let finalpage = document.querySelector(".final_page");
+let questionnaire_page = document.querySelector(".questionnaire_page");
 
 // Variáveis globais
 let data_collection = {
   "username" : "Admin",
   "seco_portal" : "default",
-  "performed_tasks" : []
+  "performed_tasks" : [],
+  "profile_questionnaire" : {}
 }
 let tasks_data = [];   // Armazena as respostas para envio
 let todo_tasks = [];   // Armazena as tasks recebidas em formato de objeto para serem feitas
 let currentTaskIndex = -1; // Índice da task atual (-1 significa página incial e 0 significa primeira task e por ai vai)
-let currentPhase = "initial"; // Pode ser "initial", "task", "review" ou "final", serve para configurara a exibição na tela
+let currentPhase = "initial"; // Pode ser "initial","questionnaire", "task", "review" ou "final", serve para configurara a exibição na tela
 let currentTaskTimestamp = "Erro ao obter o timestamp"; // Armazena o timestamp da task atual
 
 // Comunicação com o background.js para pegar a aba ativa
@@ -22,8 +24,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 
 // Inicio da avaliação (passa para a primeira task)
-document.getElementById("startTestButton").addEventListener("click", function () {
+document.getElementById("mainPageButton").addEventListener("click", function () {
   starttestdiv.style.display = "none";
+  currentPhase = "questionnaire";
+
+  updateDisplay();
+});
+
+// Botão de finalizar questionário de perfil
+document.getElementById("questionnaireButton").addEventListener("click", function () {
   currentTaskIndex = 0;
   currentPhase = "task";
 
@@ -148,6 +157,7 @@ function updateDisplay() {
   // Esconde tudo
   starttestdiv.style.display = "none";
   finalpage.style.display = "none";
+  questionnaire_page.style.display = "none";
   document.querySelectorAll(".task").forEach(div => div.style.display = "none");
   document.querySelectorAll(".task_review").forEach(div => div.style.display = "none");
 
@@ -163,7 +173,20 @@ function updateDisplay() {
     document.getElementById("task" + taskId + "_review").style.display = "block";
   } else if (currentPhase === "final") {
     finalpage.style.display = "block";
+  } else if (currentPhase === "questionnaire") {
+    questionnaire_page.style.display = "block";
   }
+}
+
+function getProfileData() {
+  const profileData = {
+    age : document.getElementById("question-age").value,
+    academic_level : document.getElementById("question-academic-level").value,
+    sector : document.getElementById("question-sector").value,
+    seco : document.getElementById("question-ecos").value,
+    experience : document.getElementById("question-experience").value
+  };
+  return profileData;
 }
 
 
@@ -171,6 +194,8 @@ function updateDisplay() {
 document.getElementById("finishevaluationbtn").addEventListener("click", function () {
     // Enviando os dados para o backend Flask
     data_collection.endTime = new Date().toISOString(); // Salva o timestamp final da avaliação
+
+    data_collection.profile_questionnaire = getProfileData(); // Salva os dados do questionário de perfil
 
     data_collection.performed_tasks = tasks_data;
 
