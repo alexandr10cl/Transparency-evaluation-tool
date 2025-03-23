@@ -30,6 +30,8 @@ document.getElementById("startTestButton").addEventListener("click", function ()
   // Solicita a aba ativa para o background.js
   chrome.runtime.sendMessage({ action: "getActiveTabInfo" });
   
+  data_collection.startTime = new Date().toISOString(); // Salva o timestamp inicial da avaliação
+
   updateDisplay();
 });
 
@@ -168,6 +170,7 @@ function updateDisplay() {
 // Botão para finalizar a avaliação e enviar os dados para o Flask
 document.getElementById("finishevaluationbtn").addEventListener("click", function () {
     // Enviando os dados para o backend Flask
+    data_collection.endTime = new Date().toISOString(); // Salva o timestamp final da avaliação
 
     data_collection.performed_tasks = tasks_data;
 

@@ -17,3 +17,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         getActiveTabInfo();
     }
 });
+
+// Open side panel when extension icon is clicked
+chrome.action.onClicked.addListener((tab) => {
+    chrome.sidePanel.open({ tabId: tab.id });
+});
