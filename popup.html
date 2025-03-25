@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferramenta de Transparência</title>
+    <title>Transparency evaluation tool</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
@@ -16,8 +16,6 @@
         <h1>Questionnaire for Profile Characterization</h1>
         <p>Before starting this experiment, please answer the following questions.</p>
         <div class="questionnaire_questions">
-            <label for="question-age">What is your age?</label>
-            <input class="input" type="number" id="question-age" name="question-age">
             <label for="question-academic-level">What is your level of academic education?</label>
             <input class="input" type="text" id="question-academic-level" name="question-academic-level">
             <label for="question-sector">In which sector do you work? And in which segment do you work?</label>
@@ -31,6 +29,32 @@
     </div>
 
     <div class="container-tasks" id="taskscontainer">
+    </div>
+
+    <div class="final_questionnaire_page">
+        <h1>Tasks completed!</h1>
+        <h2>We're almost done with the evaluation! Now, please answer this questionnaire about your overall experience on the portal.</h2>
+        <div class="final_questionnaire_questions">
+            <label for="question-overall">Describe your overall experience with the portal, highlighting its strengths and weaknesses and reporting any difficulties encountered.</label>
+            <input class="input" type="text" id="question-overall" name="question-overall">
+            <label for="question-emotion">Rate how you felt while using the portal.</label>
+            <input class="input" type="range" id="question-emotion" name="question-emotion" min="1" max="5" value="3">
+            <div id="emotion-range-container">
+                <div class="emotion-label" data-emotion="1">
+                    <div class="emotion-icon">😫</div>
+                    <span>Terrible</span>
+                </div>
+                <div class="emotion-label" data-emotion="3">
+                    <div class="emotion-icon">😐</div>
+                    <span>Neutral</span>
+                </div>
+                <div class="emotion-label" data-emotion="5">
+                    <div class="emotion-icon">🤩</div>
+                    <span>Excellent</span>
+                </div>
+            </div>
+        </div>
+        <button id="finalQuestionnaireButton">Next</button>
     </div>
 
     <div class="final_page" id="finalpage">

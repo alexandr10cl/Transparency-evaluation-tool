@@ -1,19 +1,22 @@
 let starttestdiv = document.querySelector(".main_page");
 let finalpage = document.querySelector(".final_page");
 let questionnaire_page = document.querySelector(".questionnaire_page");
+let final_questionnaire_page = document.querySelector(".final_questionnaire_page");
 
 // Variáveis globais
 let data_collection = {
   "username" : "Admin",
   "seco_portal" : "default",
   "performed_tasks" : [],
-  "profile_questionnaire" : {}
+  "profile_questionnaire" : {},
+  "final_questionnaire" : {},
 }
 let tasks_data = [];   // Armazena as respostas para envio
 let todo_tasks = [];   // Armazena as tasks recebidas em formato de objeto para serem feitas
 let currentTaskIndex = -1; // Índice da task atual (-1 significa página incial e 0 significa primeira task e por ai vai)
-let currentPhase = "initial"; // Pode ser "initial","questionnaire", "task", "review" ou "final", serve para configurara a exibição na tela
+let currentPhase = "initial"; // Pode ser "initial","questionnaire", "task", "review", "finalquestionnaire" ou "final", serve para configurar a exibição na tela
 let currentTaskTimestamp = "Erro ao obter o timestamp"; // Armazena o timestamp da task atual
+let currentTaskStatus = "solving" // alterado para "solved" ou "couldntsolve" no botão de finalizar a task
 
 // Comunicação com o background.js para pegar a aba ativa
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -46,6 +49,8 @@ document.getElementById("questionnaireButton").addEventListener("click", functio
 
 // Recupera tasks do Flask e gera o HTML
 document.addEventListener("DOMContentLoaded", function () {
+  emotionRange(); //Ativa o UI da escala de emoção
+
   chrome.runtime.sendMessage({ action: "getActiveTabInfo" }); // Envia mensagem para o background.js para pegar a aba ativa
 
   fetch("http://127.0.0.1:5000/gettasks")
@@ -95,10 +100,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Adiciona eventos aos botões da task para passar para a fase de review
         document.getElementById(`finishTask${task.id}Button`).addEventListener("click", () => {
           currentPhase = "review";
+          currentTaskStatus = "solved";
           updateDisplay();
         });
         document.getElementById(`couldntSolveTask${task.id}Button`).addEventListener("click", () => {
           currentPhase = "review";
+          currentTaskStatus = "couldntsolve";
           updateDisplay();
         });
 
@@ -130,14 +137,15 @@ document.addEventListener("DOMContentLoaded", function () {
             description: task.description,
             initial_timestamp : currentTaskTimestamp,
             final_timestamp : new Date().toISOString(),
-            answers: answers
+            answers : answers,
+            status : currentTaskStatus
           });
           // Avança para a próxima task ou para a página final se não houver mais tasks
           currentTaskIndex++;
           if (currentTaskIndex < todo_tasks.length) {
             currentPhase = "task";
           } else {
-            currentPhase = "final";
+            currentPhase = "finalquestionnaire";
           }
           updateDisplay();
         });
@@ -149,6 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const container = document.querySelector("#taskscontainer");
       container.innerHTML = "<h1>Servidor fora do ar</h1> <p>Erro ao carregar tarefas</p>";
       console.error("Erro ao carregar as tasks:", error)
+      updateDisplay();
     });
 });
 
@@ -158,6 +167,7 @@ function updateDisplay() {
   starttestdiv.style.display = "none";
   finalpage.style.display = "none";
   questionnaire_page.style.display = "none";
+  final_questionnaire_page.style.display = "none";
   document.querySelectorAll(".task").forEach(div => div.style.display = "none");
   document.querySelectorAll(".task_review").forEach(div => div.style.display = "none");
 
@@ -175,12 +185,13 @@ function updateDisplay() {
     finalpage.style.display = "block";
   } else if (currentPhase === "questionnaire") {
     questionnaire_page.style.display = "block";
+  } else if (currentPhase === "finalquestionnaire") {
+    final_questionnaire_page.style.display = "block";
   }
 }
 
 function getProfileData() {
   const profileData = {
-    age : document.getElementById("question-age").value,
     academic_level : document.getElementById("question-academic-level").value,
     sector : document.getElementById("question-sector").value,
     seco : document.getElementById("question-ecos").value,
@@ -189,6 +200,19 @@ function getProfileData() {
   return profileData;
 }
 
+function getFinalQuestionnaireData() {
+  const finalQuestionnaireData = {
+    comments : document.getElementById("question-overall").value,
+    emotion : document.getElementById("question-emotion").value,
+  };
+  return finalQuestionnaireData;
+}
+
+// Botão para finalizar o questionário final
+document.getElementById("finalQuestionnaireButton").addEventListener("click", function () {
+  currentPhase = "final";
+  updateDisplay();
+});
 
 // Botão para finalizar a avaliação e enviar os dados para o Flask
 document.getElementById("finishevaluationbtn").addEventListener("click", function () {
@@ -196,6 +220,8 @@ document.getElementById("finishevaluationbtn").addEventListener("click", functio
     data_collection.endTime = new Date().toISOString(); // Salva o timestamp final da avaliação
 
     data_collection.profile_questionnaire = getProfileData(); // Salva os dados do questionário de perfil
+
+    data_collection.final_questionnaire = getFinalQuestionnaireData(); // Salva os dados do questionário final
 
     data_collection.performed_tasks = tasks_data;
 
@@ -215,3 +241,38 @@ document.getElementById("finishevaluationbtn").addEventListener("click", functio
         console.error("Erro ao enviar os dados:", error);
     });
 });
+
+
+
+// UI FUNCTIONS
+// UI FUNCTIONS
+function emotionRange() {
+  const rangeInput = document.getElementById('question-emotion');
+  const emotionLabels = document.querySelectorAll('.emotion-label');
+
+  function updateLabelStyle() {
+    const value = rangeInput.value;
+
+    emotionLabels.forEach(label => {
+      const labelEmotion = parseInt(label.dataset.emotion);
+      const currentEmotion = parseInt(value);
+
+      const distance = Math.abs(labelEmotion - currentEmotion);
+      const opacity = distance <= 1 ? 1 : 0.5;
+      label.style.opacity = opacity;
+    });
+  }
+
+  updateLabelStyle(); // Estilo inicial
+
+  rangeInput.addEventListener('input', updateLabelStyle); // Atualizar opacidade
+
+  emotionLabels.forEach(label => {
+    label.addEventListener('click', () => {
+      const emotion = label.dataset.emotion;
+      rangeInput.value = emotion;
+      
+      rangeInput.dispatchEvent(new Event('input'));
+    });
+  });
+}
