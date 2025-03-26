@@ -1,98 +1,133 @@
-.teste_receber_dados{
-    display: none;
+:root {
+  /* Color Variables */
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --text-color: #2c3e50;
 }
 
-.final_page{
-    display: none;
+/* Global Reset and Base Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.task{
-    display: none;
+h1 {
+  text-align: center;
+}
+
+.main_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.questionnaire_page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.final_questionnaire_page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .task_review{
-    display: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    margin: 0;
-    padding: 20px;
-    color: #333;
-    width: fit-content;
-    height: fit-content;
-    margin: auto;
+.final_page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
+.task {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Hidden Elements */
+.teste_receber_dados,
+.final_page,
+.task,
+.task_review {
+  display: none;
+}
+
+/* Input Styles */
 .input {
-    border: 1.5px solid transparent;
-    width: 15em;
-    height: 2.5em;
-    padding-left: 0.8em;
-    outline: none;
-    overflow: hidden;
-    background-color: #fcfcfc;
-    border-radius: 10px;
-    transition: all 0.5s;
-  }
-  
-  .input:hover,
-  .input:focus {
-    border: 1.5px solid #4A9DEC;
-    box-shadow: 0px 0px 0px 4px rgb(74, 157, 236, 20%);
-    background-color: white;
-  }
+  width: 15em;
+  height: 2.5em;
+  padding-left: 0.8em;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background-color: #fcfcfc;
+  outline: none;
+  overflow: hidden;
+  transition: all 0.5s;
+}
 
-  /* From Uiverse.io by portseif */ 
+.input:hover,
+.input:focus {
+  border-color: #4A9DEC;
+  box-shadow: 0px 0px 0px 4px rgba(74, 157, 236, 0.2);
+  background-color: white;
+}
+
+/* Button Styles */
 button {
-    background-color: #ffffff;
-    border: 1px solid rgb(209, 213, 219);
-    border-radius: 0.5rem;
-    color: #111827;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.25rem;
-    padding: 0.75rem 1rem;
-    text-align: center;
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-select: none;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-  }
-  
-  button:hover {
-    background-color: #f9fafb;
-  }
-  
-  button:focus {
-    outline: 2px solid rgba(0, 0, 0, 0.1);
-    outline-offset: 2px;
-  }
-  
-  button:focus-visible {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-  
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  transition: transform 0.2s, background-color 0.2s;
+}
 
+button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+button:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.1);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Special Button Styles */
 .couldntsolve {
   background: none;
-    border: none;
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: inherit;
-    font-family: inherit;
-    padding: 0;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
 }
 
 .couldntsolve:hover {
@@ -100,30 +135,21 @@ button {
   color: darkblue;
 }
 
-.question {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+/* Question and Questionnaire Styles */
+.question,
+.questionnaire_questions,
+.final_questionnaire_questions {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
 .question label {
-    font-weight: bold;
-    margin-bottom: 5px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.questionnaire_questions {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.final_questionnaire_questions{
-  display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-/* Range input */ 
+/* Emotion Range Input Styles */
 #question-emotion {
   -webkit-appearance: none;
   width: 100%;
@@ -132,9 +158,9 @@ button {
   border-radius: 5px;
   outline: none;
   opacity: 0.7;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
   overflow: visible;
-  padding: 0px;
+  padding: 0;
 }
 
 #question-emotion::-webkit-slider-thumb {
@@ -169,4 +195,51 @@ button {
 .emotion-icon {
   font-size: 40px;
   margin-bottom: 5px;
+}
+
+/* Main page text Styles */
+
+.process-step {
+  background-color: #f9f9f9;
+  border-left: 3px solid #3498db;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 1px;
+  padding-bottom: 6px;
+  margin-bottom: 15px;
+  border-radius: 0 6px 6px 0;
+  transition: all 0.3s ease;
+}
+
+.process-step:hover {
+  background-color: #f0f4f8;
+  transform: translateX(5px);
+}
+
+.process-step h3 {
+  color: #3498db;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.process-step p {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 15px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #e0e0e0;
 }

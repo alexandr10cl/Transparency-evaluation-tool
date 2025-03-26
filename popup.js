@@ -172,21 +172,21 @@ function updateDisplay() {
   document.querySelectorAll(".task_review").forEach(div => div.style.display = "none");
 
   if (currentPhase === "initial") {
-    starttestdiv.style.display = "block";
+    starttestdiv.style.display = "flex";
   } else if (currentPhase === "task") {
     // Exibe a parte da tarefa da task atual
     const taskId = todo_tasks[currentTaskIndex].id;
-    document.getElementById("task" + taskId).style.display = "block";
+    document.getElementById("task" + taskId).style.display = "flex";
   } else if (currentPhase === "review") {
     // Exibe a parte de review da task atual
     const taskId = todo_tasks[currentTaskIndex].id;
-    document.getElementById("task" + taskId + "_review").style.display = "block";
+    document.getElementById("task" + taskId + "_review").style.display = "flex";
   } else if (currentPhase === "final") {
-    finalpage.style.display = "block";
+    finalpage.style.display = "flex";
   } else if (currentPhase === "questionnaire") {
-    questionnaire_page.style.display = "block";
+    questionnaire_page.style.display = "flex";
   } else if (currentPhase === "finalquestionnaire") {
-    final_questionnaire_page.style.display = "block";
+    final_questionnaire_page.style.display = "flex";
   }
 }
 
@@ -236,15 +236,13 @@ document.getElementById("finishevaluationbtn").addEventListener("click", functio
     .then(data => { // Agora com os dados convertidos, exibe na tela que foi enviado com sucesso
         console.log("Resposta do servidor:", data);
         alert("Dados enviados com sucesso");
+        document.getElementById("finishevaluationbtn").disabled = true; // Desabilita o botão de finalizar
     })
     .catch(error => { //tratamento de erro
         console.error("Erro ao enviar os dados:", error);
     });
 });
 
-
-
-// UI FUNCTIONS
 // UI FUNCTIONS
 function emotionRange() {
   const rangeInput = document.getElementById('question-emotion');
