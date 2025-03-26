@@ -69,7 +69,7 @@ h1 {
 
 /* Input Styles */
 .input {
-  width: 15em;
+  width: 80%;
   height: 2.5em;
   padding-left: 0.8em;
   border: 1.5px solid transparent;
@@ -78,6 +78,7 @@ h1 {
   outline: none;
   overflow: hidden;
   transition: all 0.5s;
+  font-size: 1rem;
 }
 
 .input:hover,
@@ -85,6 +86,15 @@ h1 {
   border-color: #4A9DEC;
   box-shadow: 0px 0px 0px 4px rgba(74, 157, 236, 0.2);
   background-color: white;
+}
+
+textarea {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 80%;
+  max-width: 80%;
+  min-width: 80%;
+  height: fit-content;
+  min-height: 2.5em;
 }
 
 /* Button Styles */
@@ -136,18 +146,30 @@ button:disabled {
 }
 
 /* Question and Questionnaire Styles */
-.question,
-.questionnaire_questions,
-.final_questionnaire_questions {
+.questionnaire {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Question Container */
+.question {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .question label {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  font-size: 1rem;
 }
+
+
 
 /* Emotion Range Input Styles */
 #question-emotion {

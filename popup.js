@@ -77,15 +77,19 @@ document.addEventListener("DOMContentLoaded", function () {
         taskWrapper.innerHTML = `
           <div class="task" id="task${task.id}">
             <h1>Task ${task.id}</h1>
+            <hr style="border: 1px solid #ccc; width: 80%;">
             <h2 id="task${task.id}_title" style="display: none;">${task.description}</h2>
             <h2 id="task${task.id}_startmassage">Start the task when you're ready</h2>
+            <hr style="border: 1px solid #ccc; width: 80%;">
             <button id="startTask${task.id}Button">Start Task</button>
             <button id="finishTask${task.id}Button" style="display: none;">Finish</button>
             <button class="couldntsolve" id="couldntSolveTask${task.id}Button" style="display: none;">Couldn't solve it?</button>
           </div>
           <div class="task_review" id="task${task.id}_review">
             <h1>Task ${task.id} Review</h1>
+            <hr style="border: 1px solid #ccc; width: 80%;">
             <h2>${task.description}</h2>
+            <hr style="border: 1px solid #ccc; width: 80%;">
             <div class="task-questions">
               ${questionsHTML}
             </div>

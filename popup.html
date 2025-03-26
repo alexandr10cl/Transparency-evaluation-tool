@@ -9,6 +9,7 @@
 <body>
     <div class="main_page">
         <h1>Transparency evaluation tool</h1>
+        <hr style="border: 1px solid #ccc; width: 80%;">
         <h2>Evaluation Process: What to Expect</h2>
     <div class="timeline">
         <div class="process-step">
@@ -19,7 +20,7 @@
             </p>
         </div>
         <div class="process-step">
-            <h3>2. Task Exploration</h3>
+            <h3>2. Task Solving</h3>
             <p>
                 You will need to complete several tasks that will guide you through exploring the portal. 
                 These tasks will take you through the key parts of the portal so that you can evaluate it.
@@ -43,16 +44,25 @@
 
     <div class="questionnaire_page">
         <h1>Questionnaire for Profile Characterization</h1>
-        <p>Before starting this experiment, please answer the following questions.</p>
+        <hr style="border: 1px solid #ccc; width: 80%;">
+        <h2>Before starting this experiment, please answer the following questions.</h2>
         <div class="questionnaire_questions">
-            <label for="question-academic-level">What is your level of academic education?</label>
-            <input class="input" type="text" id="question-academic-level" name="question-academic-level">
-            <label for="question-sector">In which sector do you work? And in which segment do you work?</label>
-            <input class="input" type="text" id="question-sector" name="question-sector">
-            <label for="question-ecos">For which ecosystem do you develop?</label>
-            <input class="input" type="text" id="question-ecos" name="question-ecos">
-            <label for="question-experience">How long have you been working with software development (in years)?</label>
-            <input class="input" type="number" id="question-experience" name="question-experience">
+            <div class="question">
+                <label for="question-academic-level">What is your level of academic education?</label>
+                <input class="input" type="text" id="question-academic-level" name="question-academic-level">
+            </div>
+            <div class="question">
+                <label for="question-sector">In which sector do you work? And in which segment do you work?</label>
+                <input class="input" type="text" id="question-sector" name="question-sector">
+            </div>
+            <div class="question">
+                <label for="question-ecos">For which ecosystem do you develop?</label>
+                <input class="input" type="text" id="question-ecos" name="question-ecos">
+            </div>
+            <div class="question">
+                <label for="question-experience">How long have you been working with software development (in years)?</label>
+                <input class="input" type="number" id="question-experience" name="question-experience">
+            </div>
         </div>
         <button id="questionnaireButton">Start evaluation</button>
     </div>
@@ -62,12 +72,18 @@
 
     <div class="final_questionnaire_page">
         <h1>Tasks completed!</h1>
+        <hr style="border: 1px solid #ccc; width: 80%;">
         <h2>We're almost done with the evaluation! Now, please answer this questionnaire about your overall experience on the portal.</h2>
+        <hr style="border: 1px solid #ccc; width: 80%;">
         <div class="final_questionnaire_questions">
-            <label for="question-overall">Describe your overall experience with the portal, highlighting its strengths and weaknesses and reporting any difficulties encountered.</label>
-            <input class="input" type="text" id="question-overall" name="question-overall">
-            <label for="question-emotion">Rate how you felt while using the portal.</label>
-            <input class="input" type="range" id="question-emotion" name="question-emotion" min="1" max="5" value="3">
+            <div class="question">
+                <label for="question-overall">Describe your overall experience with the portal, highlighting its strengths and weaknesses and reporting any difficulties encountered.</label>
+                <textarea class="input" name="question-overall" id="question-overall"></textarea>
+            </div>
+            <div class="question">
+                <label for="question-emotion">Rate how you felt while using the portal.</label>
+                <input class="input" type="range" id="question-emotion" name="question-emotion" min="1" max="5" value="3">
+            </div>
             <div id="emotion-range-container">
                 <div class="emotion-label" data-emotion="1">
                     <div class="emotion-icon">😫</div>
@@ -87,7 +103,10 @@
     </div>
 
     <div class="final_page" id="finalpage">
-        <h1>Thank you for participating!</h1>
+        <h1>We've finished the evaluation!</h1>
+        <hr style="border: 1px solid #ccc; width: 80%;">
+        <h2>Thank you for participating! Click the button to submit the collected data.</h2>
+        <hr style="border: 1px solid #ccc; width: 80%;">
         <button id="finishevaluationbtn">Finish evaluation</button>
     </div>
 
