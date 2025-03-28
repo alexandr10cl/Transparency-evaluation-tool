@@ -1,21 +1,26 @@
-// Função para pegar a aba ativa e enviar as informações
-function getActiveTabInfo() {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      if (tabs.length > 0) {
-          // Envia os dados da aba para o popup.js
-          chrome.runtime.sendMessage({
-              action: "setActiveTabInfo",
-              url: tabs[0].url
-          });
-      }
-  });
-}
+// Track tab/page navigation
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    // Only send message when page is completely loaded and it's the active tab
+    if (changeInfo.status === 'complete' && tab.active) {
+      chrome.runtime.sendMessage({
+        action: "pageNavigation",
+        url: tab.url,
+        timestamp: new Date().toISOString(),
+        title: tab.title
+      });
+    }
+});
 
-// Escuta a mensagem enviada pelo popup.js
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.action === "getActiveTabInfo") {
-      getActiveTabInfo();
-  }
+// Track when user switches between tabs
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+    chrome.tabs.get(activeInfo.tabId, function(tab) {
+      chrome.runtime.sendMessage({
+        action: "tabSwitch",
+        url: tab.url,
+        timestamp: new Date().toISOString(),
+        title: tab.title
+      });
+    });
 });
 
 // Open side panel when extension icon is clicked

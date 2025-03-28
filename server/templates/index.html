@@ -322,10 +322,10 @@ body {
     <!-- Agrupar por Portal (seco_portal) -->
     {% set portals = {} %}
     {% for collection in collections %}
-      {% if collection.seco_portal not in portals %}
-        {% set _ = portals.update({collection.seco_portal: []}) %}
+      {% if collection.evaluation_code not in portals %}
+        {% set _ = portals.update({collection.evaluation_code: []}) %}
       {% endif %}
-      {% set _ = portals[collection.seco_portal].append(collection) %}
+      {% set _ = portals[collection.evaluation_code].append(collection) %}
     {% endfor %}
     
     <!-- Exibir portais em seções colapsáveis -->
